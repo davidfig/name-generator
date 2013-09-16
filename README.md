@@ -6,7 +6,7 @@ Yopey Yopey's Name Generator as seen at http://yopeyopey.com/tools/names/
 License
 =======
 
-Copyright (c) YOPYE YOPEY LLC 2013, 
+Copyright (c) 2013 by YOPEY YOPEY LLC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
