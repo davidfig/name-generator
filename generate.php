@@ -131,13 +131,13 @@ class NameList {
 				$select = $this->names[rand(0, count($this->names) - 1)];
 				$syllables = $this->returnSyllables($select);
 				$count = count($syllables);
-				$result = $syllables[0];
+				$result = trim($syllables[0]);
 				for ($j = 1; $j < $count; $j++) {
 					do {
 						$select = $this->names[rand(0, count($this->names) - 1)];
 						$syllables = $this->returnSyllables($select);
 					} while (count($syllables) < $j);
-					$result .= $syllables[$j];
+					$result .= trim($syllables[$j]);
 				}
 				$this->chosen[] = $result;
 			}			

@@ -130,20 +130,20 @@
 				<th id="t2col1"></th>
 				<th id="t2col2">Name Count</th>
 				<th id="t2col3">Source</th>
-			</tr><tr class="default familyName" name="Last Names (US Census 2000)">
+			</tr><tr class="familyName" name="Last Names (US Census 2000)">
 				<td>US Last Names</td>
 				<td>151,671</td>
 				<td><a href="#" class="uscensus">US Census 2000</a></td>
 			</tr>							
-			</tr><tr class="familyName" name="Last Names (QuietAffiliate)">
+			</tr><tr class="default familyName" name="Last Names (QuietAffiliate)">
 				<td>Last Names</td>
 				<td>88,799</td>
 				<td><a href="#" class="quietaffiliate">quietaffiliates.com</a></td>
 			</tr>			
 		</table>
 	</div>
-	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">
-		<div style="line-height: 300%">Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
+	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;padding-bottom:10px;border-top:1px dashed black;font-style:italic">
+		<div>Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
 	</div>
 </body>
 </html>
