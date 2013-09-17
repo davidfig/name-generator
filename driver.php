@@ -65,14 +65,14 @@
 			}
 		?>
 		<h2>Settings</h2>
-		<input type="text" id="seed" size="1" value="">Seed number(leave blank to use random seed)<br>
-		<input type="text" id="number" size="1" value="10">Number to generate<br>
+		<input type="text" id="seed" size="1" value="">Seed number (leave blank to use random seed)<br>
+		<input type="text" id="number" size="1" value="10">Amount of names to generate<br>
 		<label><input type="checkbox" name="randomize">Randomize names</label><br>
 		<br><input id="generate" type="submit" value="Generate Names" onclick="generateName()"> (or press ENTER)
 	</div>
-	<div style="font-size: 75%;position: fixed; bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">
+	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">
 		<div>US Baby List and Old Testament List: <a href="https://github.com/hadley/data-baby-names">https://github.com/hadley/data-baby-names</a></div>
-		<div>Lord of the Rings Name Lists: <a href="http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves">http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves</a><div>
+		<div>Lord of the Rings Elf Name List: <a href="http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves">http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves</a><div>
 		<div>Basics of randomizing the name lists: <a href="http://www.skorks.com/2009/07/how-to-write-a-name-generator-in-ruby/">How to Write a Name Generator (In Ruby)</a><div>	
 		<div style="line-height: 300%">Source code is available at: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
 	</div>
