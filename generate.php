@@ -2,7 +2,9 @@
 /* https://github.com/davidfig/name-generator */
 
 class NameList {
-	public $names;
+	public $chosen;
+	
+	private $names;
 	
 	private $lists;	
 	private $handle;
@@ -18,12 +20,26 @@ class NameList {
 				switch ($name) {
 					case "Old Testament (Hadley)": 
 					case "Elf - Lord of the Rings (Wikipedia)":
-						$this->loadLine(); break;
+						$this->loadLine(); break;					
+					case "First Names (QuietAffiliate)":
+					case "Last Names (QuietAffiliate)":
+						$this->loadWords(); break;
 					case "US Baby Names (Hadley)": $this->loadUSBaby(); break;
 					default: echo "Error: List not found."; return;
 				}			
 				fclose($this->handle);
 			}
+		}
+	}
+
+	private function loadWords() {
+		$line = fgets($this->handle);
+		$words = explode("\r",$line);
+		if (count($this->names)) {
+			$this->names = array_merge($this->names, $words);
+		}
+		else {
+			$this->names = $words;		
 		}
 	}
 	
@@ -42,13 +58,9 @@ class NameList {
 		}
 	}
 	
-	public function generate($random, $seed, $number) {
+	public function generate($random, $number) {
 		if (count($this->names)) {
-			if ($seed && is_numeric($seed)) {
-				srand($seed);
-			}
-			
-			if (!$number || !is_numeric($seed)) {
+			if (!$number || !is_numeric($number)) {
 				$number = 10;
 			}
 			
@@ -60,24 +72,33 @@ class NameList {
 			for ($i = 0; $i < $number; $i++) {
 				// ensure no duplicate entries
 				do {
-					$try = rand(0, count($this->names) - 1);
-				} while (count($results) != 0 && in_array($try, $results));
-				$results[] = $try;		
-			}
-			foreach ($results as $result) {
-				echo $this->names[$result].'<br>';
+					$try = $this->names[rand(0, count($this->names) - 1)];
+				} while (count($this->chosen) != 0 && in_array($try, $this->chosen));
+				$this->chosen[] = $try;		
 			}
 		}
 	}
 }
 
-// for debug purposes
-if ($_GET['lists'] == '') {
-	$_GET['lists'] = "Old Testament (Hadley)";
-	$_GET['seed'] = '';
-	$_GET['number'] = 5;
+if ($_GET['given']) {
+	$given = new NameList(explode(',', $_GET['given']));
+	$given->generate($_GET['randomize']=="true", $_GET['number']);	
+}
+if ($_GET['family']) {
+	$family = new NameList(explode(',', $_GET['family']));
+	$family->generate($_GET['randomize']=="true", $_GET['number']);	
 }
 
-$lists = new NameList(explode(',', $_GET['lists']));
-$lists->generate($_GET['randomize']=="true", $_GET['seed'], $_GET['number']);
+if (count($given->chosen) || count($family->chosen)) {
+	for ($i=0; $i<$_GET['number']; $i++) {
+		if (count($given->chosen) && count($family->chosen)) {
+			echo $given->chosen[$i].' '.$family->chosen[$i].'<br>';
+		} else if (count($given->chosen)) {
+			echo $given->chosen[$i].'<br>';
+		} else {
+			echo $family->chosen[$i].'<br>';
+		}
+	}
+}
+
 ?>
