@@ -44,8 +44,17 @@ class NameList {
 	
 	public function generate($random, $seed, $number) {
 		if (count($this->names)) {
-			if ($seed) {
+			if ($seed && is_numeric($seed)) {
 				srand($seed);
+			}
+			
+			if (!$number || !is_numeric($seed)) {
+				$number = 10;
+			}
+			
+			if ($number > count($this->names)) {
+				echo "Error: not enough names in the selected name list."; 
+				return;
 			}
 			
 			for ($i = 0; $i < $number; $i++) {
