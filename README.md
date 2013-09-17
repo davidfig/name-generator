@@ -1,7 +1,9 @@
 name-generator
 ==============
 
-Yopey Yopey's Name Generator as seen at http://yopeyopey.com/tools/names/
+Yopey Yopey's Fictional Name Generator as seen at http://yopeyopey.com/tools/names/
+
+The code is a combination of HTML, Javascript, and PHP with a simple interface.
 
 BSD License
 ===========
