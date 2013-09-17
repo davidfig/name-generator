@@ -79,6 +79,32 @@ class NameList {
 		}
 	}
 	
+	private function returnSyllables($word) {
+        $vowels = [ 'a', 'e', 'i', 'o', 'u', 'y' ];
+		$syllables = [];
+		$lastSyllable = 0;
+		$leftOver = "";
+        for ($i=0; $i<strlen($word); $i++) {
+			if (in_array($word[$i], $vowels)) {
+				if ($i + 1 < strlen($word)) {
+					$i++;
+					if (in_array($word[$i], $vowels)) {
+						$i++;
+					}
+				}
+				$syllables[] = substr($word, $lastSyllable, $i - $lastSyllable + 1);
+				$lastSyllable = $i + 1;
+				$leftOver = substr($word, $i + 1);
+			}
+        }
+		if ($leftOver) {
+			$syllables[count(syllables)-1] .= $leftOver;
+		}
+
+        return $syllables;
+    }
+	
+
 	public function generateRandom($number) {
 		if (count($this->names)) {
 			if (!$number || !is_numeric($number)) {
@@ -89,28 +115,21 @@ class NameList {
 				echo "Error: not enough names in the selected name list."; 
 				return;
 			}
-			
+
 			for ($i = 0; $i < $number; $i++) {
-				$current = $this->names[rand(0, count($this->names) - 1)];
-				$length = 1; //strlen($current);
-				$final = $current[0];
-				while (strlen($final) < $length) {
-					if (rand(0,3) == 0) {
-						do {
-							$current = $this->names[rand(0, count($this->names) - 1)];
-						} while (strlen($current) > strlen($final));
-						
-					} else {
-						if (strlen($current) < strlen($final)) {
-							do {
-								$current = $this->names[rand(0, count($this->names) - 1)];
-							} while (strlen($current) < strlen($final));
-						}
-						$final += $current[strlen($final) - 1];				
-					}
+				$select = $this->names[rand(0, count($this->names) - 1)];
+				$syllables = $this->returnSyllables($select);
+				$count = count($syllables);
+				$result = $syllables[0];
+				for ($j = 1; $j < $count; $j++) {
+					do {
+						$select = $this->names[rand(0, count($this->names) - 1)];
+						$syllables = $this->returnSyllables($select);
+					} while (count($syllables) < $j);
+					$result .= $syllables[$j];
 				}
-				$this->chosen[] = $final;
-			}
+				$this->chosen[] = $result;
+			}			
 		}
 	}
 }
