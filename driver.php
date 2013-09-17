@@ -45,7 +45,7 @@
 		});
 	</script>
 </head>
-<body>	
+<body style="font-size:150%">	
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div style="width:50%;float:right">
 		<h2>Results</h2>
@@ -60,14 +60,14 @@
 					$explode = explode(".", $file);
 					$name = $explode[0];
 					$type = $explode[1];			
-					echo '<input class="list" type="checkbox" name="'.$file.'"><a href="lists/'.$file.'" title="'.$name.'">'.$name.'</a><br>';
+					echo '<label><input class="list" type="checkbox" name="'.$file.'">'.$name.'</label><br>';
 				}			
 			}
 		?>
 		<h2>Settings</h2>
 		<input type="text" id="seed" size="1" value="">Seed (leave blank to use random seed)<br>
 		<input type="text" id="number" size="1" value="10">Number to generate<br>
-		<input type="checkbox" name="randomize">Randomize names<br>
+		<label><input type="checkbox" name="randomize">Randomize names</label><br>
 		<br><input id="generate" type="submit" value="Generate Names" onclick="generateName()"> (or press ENTER)
 	</div>
 	<div style="position: fixed; bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">

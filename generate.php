@@ -16,8 +16,11 @@ class NameList {
 		foreach ($this->lists as $name) {
 			if (($this->handle = fopen("lists/".$name, "r")) !== FALSE) {
 				switch ($name) {
-					case "Old Testament (Hadley)": $this->loadLine(); break;
+					case "Old Testament (Hadley)": 
+					case "Elf - Lord of the Rings (Wikipedia)":
+						$this->loadLine(); break;
 					case "US Baby Names (Hadley)": $this->loadUSBaby(); break;
+					default: echo "Error: List not found."; return;
 				}			
 				fclose($this->handle);
 			}
@@ -27,7 +30,7 @@ class NameList {
 	private function loadLine() {	
 		while ($line = fgets($this->handle)) {
 			if ($line != '') {
-				$this->names[] = $line;
+				$this->names[] = utf8_encode($line);
 			}
 		}
 	}
@@ -40,19 +43,21 @@ class NameList {
 	}
 	
 	public function generate($random, $seed, $number) {
-		if ($seed) {
-			srand($seed);
-		}
-		
-		for ($i = 0; $i < $number; $i++) {
-			// ensure no duplicate entries
-			do {
-				$try = rand(0, count($this->names) - 1);
-			} while (count($results) != 0 && in_array($try, $results));
-			$results[] = $try;		
-		}
-		foreach ($results as $result) {
-			echo $this->names[$result].'<br>';
+		if (count($this->names)) {
+			if ($seed) {
+				srand($seed);
+			}
+			
+			for ($i = 0; $i < $number; $i++) {
+				// ensure no duplicate entries
+				do {
+					$try = rand(0, count($this->names) - 1);
+				} while (count($results) != 0 && in_array($try, $results));
+				$results[] = $try;		
+			}
+			foreach ($results as $result) {
+				echo $this->names[$result].'<br>';
+			}
 		}
 	}
 }
