@@ -23,7 +23,7 @@
 		}
 		
 		function generateName() {
-			if ($("#generate").attr("disabled") == "disabled") {
+			if ($("#generate").button("option", "disabled")) {
 				return;
 			}
 			
@@ -45,13 +45,12 @@
 				generating = true;
 				
 				$("#results").html("Generating . . .");				
-				$("#generate").attr("disabled","disabled");
+				$("#generate").button("disable");
 				$.get("generate.php?" + lists + "&number=" + $("#number").val()
 					+ "&randomize=" + ($("#randomize").is(":checked")?"true":"false"),
 					function (data) {
 						$("#results").html(data);
-						$("#results").effect("highlight", {}, 3000);
-						$("#generate").removeAttr("disabled");
+						$("#generate").button("enable");
 				});
 			}
 		}
@@ -82,7 +81,7 @@
 			$(".quietaffiliate").click(function() { window.open("http://www.quietaffiliate.com/free-first-name-and-last-name-databases-csv-and-sql"); return false;});
 			$(".hadley").click(function() { window.open("https://github.com/hadley/data-baby-names"); return false;});
 			$(".wikipedia").click(function() { window.open("http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves"); return false;});
-			
+			$(".uscensus").click(function() { window.open("http://stackoverflow.com/questions/6332119/any-good-surname-databases"); return false;});
 			$(".default").css("background-color", highlightColor);
 			
 			$("#t2col1").width($("#t1col1").width());			
@@ -94,8 +93,9 @@
 <body style="font-size:150%">	
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div style="width:50%;float:right">
-		<!--<input id="generate" type="submit" value="Generate Names" onclick="generateName()"> (or press ENTER) -->
 		<button id="generate">Generate Names</button>
+		<label><input type="checkbox" id="randomize"> Randomize syllables</label><br>
+		
 		<h2><input type="text" id="number" size="1" value="10">Results</h2>
 		<div id="results">Empty.</div>
 	</div>
@@ -130,17 +130,19 @@
 				<th id="t2col1"></th>
 				<th id="t2col2">Name Count</th>
 				<th id="t2col3">Source</th>
-			</tr><tr class="default familyName" name="Last Names (QuietAffiliate)">
+			</tr><tr class="default familyName" name="Last Names (US Census 2000)">
+				<td>US Last Names</td>
+				<td>151,671</td>
+				<td><a href="#" class="uscensus">US Census 2000</a></td>
+			</tr>							
+			</tr><tr class="familyName" name="Last Names (QuietAffiliate)">
 				<td>Last Names</td>
 				<td>88,799</td>
 				<td><a href="#" class="quietaffiliate">quietaffiliates.com</a></td>
-			</tr>
+			</tr>			
 		</table>
-		<h2>Settings</h2>		
-		<label><input type="checkbox" id="randomize">Randomize syllables in names</label><br>
 	</div>
 	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">
-		<div>Basics of shuffling the name lists: <a href="http://www.skorks.com/2009/07/how-to-write-a-name-generator-in-ruby/">How to Write a Name Generator (In Ruby)</a><div>	
 		<div style="line-height: 300%">Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
 	</div>
 </body>

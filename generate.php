@@ -24,7 +24,10 @@ class NameList {
 					case "First Names (QuietAffiliate)":
 					case "Last Names (QuietAffiliate)":
 						$this->loadWords(); break;
-					case "US Baby Names (Hadley)": $this->loadUSBaby(); break;
+					case "US Baby Names (Hadley)": 
+						$this->loadUSBaby(); break;
+					case "Last Names (US Census 2000)":					
+						$this->loadLineFixCase(); break;
 					default: echo "Error: List not found."; return;
 				}			
 				fclose($this->handle);
@@ -47,6 +50,14 @@ class NameList {
 		while ($line = fgets($this->handle)) {
 			if ($line != '') {
 				$this->names[] = utf8_encode($line);
+			}
+		}
+	}
+
+	private function loadLineFixCase() {	
+		while ($line = fgets($this->handle)) {
+			if ($line != '') {
+				$this->names[] = ucwords(strtolower(utf8_encode($line)));
 			}
 		}
 	}
