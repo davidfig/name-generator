@@ -137,7 +137,7 @@
 			</tr>
 		</table>
 		<h2>Settings</h2>		
-		<label><input type="checkbox" name="randomize">Randomize syllables in names</label><br>
+		<label><input type="checkbox" id="randomize">Randomize syllables in names</label><br>
 	</div>
 	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;border-top:1px dashed black;font-style:italic">
 		<div>Basics of shuffling the name lists: <a href="http://www.skorks.com/2009/07/how-to-write-a-name-generator-in-ruby/">How to Write a Name Generator (In Ruby)</a><div>	
