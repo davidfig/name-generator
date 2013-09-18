@@ -78,12 +78,6 @@
 			$(".givenName").css("cursor","pointer");
 			$(".familyName").css("cursor","pointer");
 
-			$(".quietaffiliate").click(function() { window.open("http://www.quietaffiliate.com/free-first-name-and-last-name-databases-csv-and-sql"); return false;});
-			$(".hadley").click(function() { window.open("https://github.com/hadley/data-baby-names"); return false;});
-			$(".wikipedia").click(function() { window.open("http://en.wikipedia.org/wiki/List_of_Middle-earth_Elves"); return false;});
-			$(".uscensus").click(function() { window.open("http://stackoverflow.com/questions/6332119/any-good-surname-databases"); return false;});
-			$(".default").css("background-color", highlightColor);
-			
 			$("#t2col1").width($("#t1col1").width());			
 			$("#t2col2").width($("#t1col2").width());			
 			$("#t2col3").width($("#t1col3").width());						
@@ -94,7 +88,7 @@
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div style="width:50%;float:right">
 		<button id="generate">Generate Names</button>
-		<label><input type="checkbox" id="randomize"> Randomize syllables</label><br>
+		<label>Randomize syllables <input type="checkbox" id="randomize"></label><br>
 		
 		<h2><input type="text" id="number" size="1" value="10">Results</h2>
 		<div id="results">Empty.</div>
@@ -106,23 +100,27 @@
 				<th id="t1col1"></th>
 				<th id="t1col2">Name Count</th>
 				<th id="t1col3">Source</th>
-			</tr><tr class="default givenName" name="First Names (QuietAffiliate)">
-				<td>First Names</td>
-				<td>5,494</td>
-				<td><a href="#" class="quietaffiliate">quietaffiliates.com</a></td>
-			</tr><tr class="givenName" name="US Baby Names (Hadley)">
-				<td>U.S. Baby Names</td>
-				<td>258,000</td>
-				<td><a href="#" class="hadley">github.com/hadley</a></td>
-			</tr><tr class="givenName" name="Old Testament (Hadley)">
-				<td>Old Testament Names</td>
-				<td>147</td>
-				<td><a href="#" class="hadley">github.com/hadley</a></td>
-			</tr><tr class="givenName" name="Elf - Lord of the Rings (Wikipedia)">
-				<td>Elf Names - LOTR</td>
-				<td>93</td>
-				<td><a href="#" class="wikipedia">wikipedia.org</a></td>
 			</tr>
+			<?php			
+				require "database.php";
+				$sources = YYFNG\Database::FetchAll("SELECT * FROM Sources");
+				$first = true;
+				foreach ($sources as $source) {				
+					if (!$source['Surname']) {
+						echo '<tr class="';
+						if ($first) {
+							echo 'default ';
+							$first = false;
+						}
+						echo 'givenName" name="'.$source['Filename'].'">
+							<td>'.$source['Title'].'</td>
+							<td>'.$source['Count'].'</td>
+							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
+							</tr>';
+					}
+				}
+			
+			?>
 		</table>
 		<h2>Family Name Sources</h2>
 		<table style="text-align:center">
@@ -130,16 +128,24 @@
 				<th id="t2col1"></th>
 				<th id="t2col2">Name Count</th>
 				<th id="t2col3">Source</th>
-			</tr><tr class="familyName" name="Last Names (US Census 2000)">
-				<td>US Last Names</td>
-				<td>151,671</td>
-				<td><a href="#" class="uscensus">US Census 2000</a></td>
-			</tr>							
-			</tr><tr class="default familyName" name="Last Names (QuietAffiliate)">
-				<td>Last Names</td>
-				<td>88,799</td>
-				<td><a href="#" class="quietaffiliate">quietaffiliates.com</a></td>
-			</tr>			
+			</tr>
+			<?php 
+				$first = true;
+				foreach ($sources as $source) {				
+					if ($source['Surname']) {
+						echo '<tr class="';
+						if ($first) {
+							echo 'default ';
+							$first = false;
+						}
+						echo 'givenName" name="'.$source['Filename'].'">
+							<td>'.$source['Title'].'</td>
+							<td>'.$source['Count'].'</td>
+							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
+							</tr>';
+					}
+				}			
+			?>
 		</table>
 	</div>
 	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;padding-bottom:10px;border-top:1px dashed black;font-style:italic">
