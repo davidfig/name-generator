@@ -1,6 +1,10 @@
 <?php
 /* https://github.com/davidfig/name-generator */
 
+namespace YYFNG;
+
+require "database.php";
+
 class NameList {
 	public $chosen;
 	
@@ -9,64 +13,14 @@ class NameList {
 	private $lists;	
 	private $handle;
 	
-	function __construct($list) {
-		$this->lists = $list;
-		$this->load();
-	}
-	
-	private function load() {
-		foreach ($this->lists as $name) {
-			if (($this->handle = fopen("lists/".$name, "r")) !== FALSE) {
-				switch ($name) {
-					case "Old Testament (Hadley)": 
-					case "Elf - Lord of the Rings (Wikipedia)":
-						$this->loadLine(); break;					
-					case "First Names (QuietAffiliate)":
-					case "Last Names (QuietAffiliate)":
-						$this->loadWords(); break;
-					case "US Baby Names (Hadley)": 
-						$this->loadUSBaby(); break;
-					case "Last Names (US Census 2000)":					
-						$this->loadLineFixCase(); break;
-					default: echo "Error: List not found."; return;
-				}			
-				fclose($this->handle);
-			}
+	function __construct($list) {	
+		for ($i=0; $i<count($list); $i++) {
+			$qFilename .= 'FileName=? OR ';
 		}
-	}
-
-	private function loadWords() {
-		$line = fgets($this->handle);
-		$words = explode("\r",$line);
-		if (count($this->names)) {
-			$this->names = array_merge($this->names, $words);
-		}
-		else {
-			$this->names = $words;		
-		}
-	}
-	
-	private function loadLine() {	
-		while ($line = fgets($this->handle)) {
-			if ($line != '') {
-				$this->names[] = utf8_encode($line);
-			}
-		}
-	}
-
-	private function loadLineFixCase() {	
-		while ($line = fgets($this->handle)) {
-			if ($line != '') {
-				$this->names[] = ucwords(strtolower(utf8_encode($line)));
-			}
-		}
-	}
-	
-	private function loadUSBaby() {
-		while ($line = fgets($this->handle)) {
-			$name = explode(',',$line)[1];
-			$this->names[] = str_replace('"', '',$name);
-		}
+		$qFilename = substr($qFilename,0,strlen($qFilename)-strlen(' OR '));
+		print_r($list);
+		$sourcesKey = Database::FetchAll("SELECT SourcesKey FROM Sources WHERE ".$qFilename,$list);
+		print_r($sourcesKey);
 	}
 	
 	public function generate($random) {
