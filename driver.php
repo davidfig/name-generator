@@ -96,7 +96,6 @@
 <body>	
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div id="settings">
-		<h2>Settings</h2>
 		<h3>Randomize Syllables of Names</h3>
 		<!-- From: http://proto.io/freebies/onoff/ -->
 		<div class="onoffswitch">
@@ -106,7 +105,7 @@
 				<div class="onoffswitch-switch"></div>
 			</label>
 		</div>
-		<h3>First Name Sources</h3>
+		<h3>First-Name Sources</h3>
 		<table class="sources">
 			<tr>
 				<th id="t1col0">Use</th>
@@ -133,7 +132,7 @@
 			
 			?>
 		</table>
-		<h3>Last Name Sources</h3>
+		<h3>Last-Name Sources</h3>
 		<table class="sources">
 			<tr>
 				<th id="t2col0">Use</th>		
@@ -159,12 +158,11 @@
 		</table>
 	</div>
 	<div id="names">
-		<h2>Names</h2>
 		<div id="results">Generating . . .</div>
 		<button id="generate">More</button>		
 	</div>
 	<div id="footer">
-		<div>Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
+		<div>Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD license)</div>		
 	</div>
 </body>
 </html>

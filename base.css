@@ -6,7 +6,7 @@ body {
 }
 
 #settings {
-	font-size: 75%;
+	font-size: 85%;
 	float: right;
 	background: rgb(240,240,240);
 	padding: 0px 10px 10px 10px;
@@ -15,6 +15,7 @@ body {
 
 #names {
 	font-size: 125%;
+	padding-top: 20px;
 }
 
 .sources {
@@ -30,6 +31,7 @@ body {
 }
 
 #footer {
+	text-align: right;
 	clear: both;
 	padding-top:10px;
 	padding-bottom:10px;
