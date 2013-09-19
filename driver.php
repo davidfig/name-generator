@@ -120,13 +120,14 @@
 				$first = true;
 				foreach ($sources as $source) {				
 					if (!$source['Surname']) {
-						echo '<tr class="'.($first?'default':'').'
+						echo '<tr class="'.($first?'default ':'').
 							'givenName" name="'.$source['SourcesKey'].'">
-							<td>'..'</td>
+							<td>'.($first?'X':'').'</td>
 							<td>'.$source['Title'].'</td>
 							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
 							</tr>';
+						$first = false;					
 					}
 				}
 			
@@ -144,18 +145,15 @@
 				$first = true;
 				foreach ($sources as $source) {				
 					if ($source['Surname']) {
-						echo '<tr class="';
-						if ($first) {
-							echo 'default ';
-							$first = false;
-						}
-						echo 'familyName" name="'.$source['SourcesKey'].'">
-							<td></td>
+						echo '<tr class="'.($first?'default ':'').
+						'familyName" name="'.$source['SourcesKey'].'">
+							<td>'.($first?'X':'').'</td>
 							<td>'.$source['Title'].'</td>
 							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
 							</tr>';
-					}
+						$first = false;							
+					}					
 				}			
 			?>
 		</table>
