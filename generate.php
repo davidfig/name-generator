@@ -39,21 +39,21 @@ class NameList {
 	}
 	
 	private function returnSyllables($word) {
-        $vowels = [ 'a', 'e', 'i', 'o', 'u', 'y' ];
+        $vowels = [ 'a', 'e', 'i', 'o', 'u', 'y', 'ó', 'ë', 'á', 'ö', 'í', 'ú', 'Ã¡' ];
 		$syllables = [];
 		$lastSyllable = 0;
 		$leftOver = "";
-        for ($i=0; $i<strlen($word); $i++) {
+        for ($i=0; $i<mb_strlen($word); $i++) {
 			if (in_array($word[$i], $vowels)) {
-				if ($i + 1 < strlen($word)) {
+				if ($i + 1 < mb_strlen($word)) {
 					$i++;
 					if (in_array($word[$i], $vowels)) {
 						$i++;
 					}
 				}
-				$syllables[] = substr($word, $lastSyllable, $i - $lastSyllable + 1);
+				$syllables[] = mb_substr($word, $lastSyllable, $i - $lastSyllable + 1);
 				$lastSyllable = $i + 1;
-				$leftOver = substr($word, $i + 1);
+				$leftOver = mb_substr($word, $i + 1);
 			}
         }
 		if ($leftOver) {
@@ -87,34 +87,27 @@ class NameList {
 	}
 }
 
-$number = $_GET['number'];
-if (!$number || !is_numeric($number)) {
-	$number = 10;
-}
-if ($number > 100) {
-	$number = 100;
-}
-
+$number = 10;
 
 if ($_GET['given']) {
 	$given = new NameList(explode(',', $_GET['given']));
 	if ($_GET['randomize']=="true") {
-		$given->generateRandom($_GET['number']);	
+		$given->generateRandom($number);	
 	} else {
-		$given->generate($_GET['number']);	
+		$given->generate($number);	
 	}
 }
 if ($_GET['family']) {
 	$family = new NameList(explode(',', $_GET['family']));
 	if ($_GET['randomize']=="true") {
-		$family->generateRandom($_GET['number']);
+		$family->generateRandom($number);
 	} else {
-		$family->generate($_GET['number']);	
+		$family->generate($number);	
 	}	
 }
 
 if (count($given->chosen) || count($family->chosen)) {
-	for ($i=0; $i<$_GET['number']; $i++) {
+	for ($i=0; $i<$number; $i++) {
 		if (count($given->chosen) && count($family->chosen)) {
 			echo $given->chosen[$i].' '.$family->chosen[$i].'<br>';
 		} else if (count($given->chosen)) {

@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Yopey Yopey's Fictional Name Generator</title>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script>
@@ -26,7 +27,7 @@
 			if ($("#generate").button("option", "disabled")) {
 				return;
 			}
-			
+		
 			var lists = nameLists("givenName");
 			if (lists.length) {
 				lists = "given=" + lists;
@@ -43,10 +44,10 @@
 				$("#results").effect("highlight", {}, 3000);
 			} else {
 				generating = true;
-				
+			
 				$("#results").html("Generating . . .");				
 				$("#generate").button("disable");
-				$.get("generate.php?" + lists + "&number=" + $("#number").val()
+				$.get("generate.php?" + lists 
 					+ "&randomize=" + ($("#randomize").is(":checked")?"true":"false"),
 					function (data) {
 						$("#results").html(data);
@@ -80,18 +81,19 @@
 			$(".default").css("background-color", highlightColor);
 			$("#t2col1").width($("#t1col1").width());			
 			$("#t2col2").width($("#t1col2").width());			
-			$("#t2col3").width($("#t1col3").width());						
+			$("#t2col3").width($("#t1col3").width());	
+
+			generateName();
 		});
 	</script>
 </head>
-<body style="font-size:150%">	
+<body style="font-size:125%; font-family: 'Raleway', sans-serif;">	
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div style="width:50%;float:right">
-		<button id="generate">Generate Names</button>
-		<label>Randomize syllables <input type="checkbox" id="randomize"></label><br>
-		
-		<h2><input type="text" id="number" size="1" value="10">Results</h2>
-		<div id="results">Empty.</div>
+		<label>Randomize syllables <input type="checkbox" id="randomize"></label><br>		
+		<h2>Names</h2>
+		<div style="margin-bottom: 20px" id="results">Generating . . .</div>
+		<button id="generate">More Names</button>		
 	</div>
 	<div style="width:50%">
 		<h2>Given Name Sources</h2>
