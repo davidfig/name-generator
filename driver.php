@@ -63,7 +63,7 @@
 				$(this).find("td:first").html("");
 			} else {
 				$(this).css("background-color", highlightColor);
-				$(this).find("td:first").html("X");
+				$(this).find("td:first").html("&#x2713");
 			}			
 		}
 		
@@ -121,7 +121,7 @@
 					if (!$source['Surname']) {
 						echo '<tr class="'.($first?'default ':'').
 							'givenName" name="'.$source['SourcesKey'].'">
-							<td>'.($first?'X':'').'</td>
+							<td>'.($first?'&#x2713':'').'</td>
 							<td>'.$source['Title'].'</td>
 							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
@@ -146,7 +146,7 @@
 					if ($source['Surname']) {
 						echo '<tr class="'.($first?'default ':'').
 						'familyName" name="'.$source['SourcesKey'].'">
-							<td>'.($first?'X':'').'</td>
+							<td>'.($first?'&#x2713':'').'</td>
 							<td>'.$source['Title'].'</td>
 							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
