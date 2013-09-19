@@ -5,12 +5,25 @@ namespace YYFNG;
 
 require "database.php";
 
+//define (TEST, "Dwarf - LOTR (Wikipedia)");
+
 $p = new Populate();
-$p->checkTables();
-$p->injestSources();
-echo '<br>Yopey Yopey\'s Fictional Name Generator is ready.';
+if (defined(TEST)) {
+	echo '<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head>';
+	echo "Testing ".TEST."<br>";
+	$p->testSource(TEST);
+} else {
+	$p->checkTables();
+	$p->injestSources();
+	echo '<br>Yopey Yopey\'s Fictional Name Generator is ready.';
+}
 
 class Populate {
+	public function testSource($source) {
+		$send["Filename"] = $source;
+		$this->injestSource($send);
+	}
+
 	public function checkTables() {
 		echo "Checking if tables exist . . .";
 		try {
@@ -91,10 +104,6 @@ class Populate {
 	public function injestSource($source) {
 		if (($this->handle = fopen("lists/".$source['Filename'], "r")) !== FALSE) {
 			switch ($source['Filename']) {
-				case "Old Testament (Hadley)": 
-				case "Elf - Lord of the Rings (Wikipedia)":
-				case "Dwarf (Bugmansbrewery)":
-					$this->loadLine($source["key"]); break;					
 				case "First Names (QuietAffiliate)":
 				case "Last Names (QuietAffiliate)":
 					$this->loadWords($source["key"]); break;
@@ -102,15 +111,26 @@ class Populate {
 					$this->loadUSBaby($source["key"]); break;
 				case "Last Names (US Census 2000)":					
 					$this->loadLineFixCase($source["key"]); break;
-				default: echo "Error: Configuration for ".$name." not found."; return;
+				case "Old Testament (Hadley)": 
+				case "Elf - Lord of the Rings (Wikipedia)":
+				case "Dwarf (Bugmansbrewery)":					
+					$this->loadLineEncode($source["key"]); break;
+				default:
+					$this->loadLine($source["key"]); break;
+
+				
 			}			
 			fclose($this->handle);
 		}
 	}
 
 	private function insertWord($word,$key) {
-		Database::Query("INSERT INTO Names (SourcesKey,Name) VALUES (?,?)",
-			array($key,$word));
+		if (!$key) {
+			echo $word."<br>";
+		} else {
+			Database::Query("INSERT INTO Names (SourcesKey,Name) VALUES (?,?)",
+				array($key,$word));
+		}
 	}
 	
 	private function loadWords($key) {
@@ -120,8 +140,16 @@ class Populate {
 			$this->insertWord($word,$key);
 		}
 	}
-	
+
 	private function loadLine($key) {	
+		while ($line = fgets($this->handle)) {
+			if ($line != '') {
+				$this->insertWord($line,$key);
+			}
+		}
+	}
+	
+	private function loadLineEncode($key) {	
 		while ($line = fgets($this->handle)) {
 			if ($line != '') {
 				$this->insertWord(utf8_encode($line),$key);
