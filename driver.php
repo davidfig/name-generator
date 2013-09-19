@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Yopey Yopey's Fictional Name Generator</title>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" href="base.css" />	
 	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -72,7 +73,7 @@
 				}
 			});
 			$(document).tooltip();
-			
+			$("#radio").buttonset();
 			$("#generate").button().click(generateName);
 			$(".givenName").click(selectRow);	
 			$(".familyName").click(selectRow);
@@ -87,17 +88,21 @@
 		});
 	</script>
 </head>
-<body style="font-size:125%; font-family: 'Raleway', sans-serif;">	
+<body>	
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
-	<div style="width:50%;float:right">
-		<label>Randomize syllables <input type="checkbox" id="randomize"></label><br>		
-		<h2>Names</h2>
-		<div style="margin-bottom: 20px" id="results">Generating . . .</div>
-		<button id="generate">More Names</button>		
-	</div>
-	<div style="width:50%">
-		<h2>Given Name Sources</h2>
-		<table style="text-align:center">
+	<div id="settings">
+		<h2>Settings</h2>
+		<h3>Randomize Sources</h3>
+		<!-- From: http://proto.io/freebies/onoff/ -->
+		<div class="onoffswitch">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="randomize">
+			<label class="onoffswitch-label" for="randomize">
+				<div class="onoffswitch-inner"></div>
+				<div class="onoffswitch-switch"></div>
+			</label>
+		</div>
+		<h3>Given Name Sources</h3>
+		<table class="sources"">
 			<tr>
 				<th id="t1col1"></th>
 				<th id="t1col2">Name Count</th>
@@ -124,8 +129,8 @@
 			
 			?>
 		</table>
-		<h2>Family Name Sources</h2>
-		<table style="text-align:center">
+		<h3>Family Name Sources</h3>
+		<table class="sources">
 			<tr>
 				<th id="t2col1"></th>
 				<th id="t2col2">Name Count</th>
@@ -149,6 +154,11 @@
 				}			
 			?>
 		</table>
+	</div>
+	<div>
+		<h2>Names</h2>
+		<div id="results">Generating . . .</div>
+		<button id="generate">More</button>		
 	</div>
 	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;padding-bottom:10px;border-top:1px dashed black;font-style:italic">
 		<div>Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
