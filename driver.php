@@ -44,7 +44,6 @@
 				$("#results").html("Please include at least one Source.");
 				$("#results").effect("highlight", {}, 3000);
 			} else {
-				$("#results").html("Generating . . .");				
 				$("#generate").button("option", "disabled", true);
 				$.get("generate.php?" + lists 
 					+ "&randomize=" + ($("#randomize").is(":checked")?"true":"false")

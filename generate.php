@@ -39,7 +39,7 @@ class NameList {
 	}
 	
 	private function returnSyllables($word) {
-        $vowels = [ 'a', 'e', 'i', 'o', 'u', 'y', 'ó', 'ë', 'á', 'ö', 'í', 'ú', 'Ã¡' ];
+        $vowels = [ 'a', 'e', 'i', 'o', 'u', 'y', 'ó', 'ë', 'á', 'ö', 'í', 'ú', 'Ã', 'ë' ];
 		$syllables = [];
 		$lastSyllable = 0;
 		$leftOver = "";
