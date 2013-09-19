@@ -44,15 +44,14 @@
 				$("#results").html("Please include at least one Source.");
 				$("#results").effect("highlight", {}, 3000);
 			} else {
-				generating = true;
-			
 				$("#results").html("Generating . . .");				
-				$("#generate").button("disable");
+				$("#generate").button("option", "disabled", true);
 				$.get("generate.php?" + lists 
-					+ "&randomize=" + ($("#randomize").is(":checked")?"true":"false"),
+					+ "&randomize=" + ($("#randomize").is(":checked")?"true":"false")
+					+ "&cache = " + Math.floor(Math.random()*100),
 					function (data) {
 						$("#results").html(data);
-						$("#generate").button("enable");
+						$("#generate").button("option", "disabled", false);
 				});
 			}
 		}
