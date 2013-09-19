@@ -3,7 +3,10 @@ name-generator
 
 Yopey Yopey's Fictional Name Generator as seen at http://yopeyopey.com/tools/names/
 
-The code uses a MySQL database to and a combination of HTML, Javascript, and PHP.
+The code uses a MySQL database with a combination of HTML, Javascript, and PHP.
+
+Rename sample_config.php to config.php and include your MySQL URL, username, and password. You need a pre-created database, the script will create the tables.
+
 To create the database, open /populate.php (because it injests from flat files, you may need to run this from the command line so it doesn't timeout).
 
 BSD License
