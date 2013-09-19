@@ -8,40 +8,34 @@ require "database.php";
 class NameList {
 	public $chosen;
 	
-	private $names;
+	private $list;	
+	private $qFilename;
 	
-	private $lists;	
-	private $handle;
-	
-	function __construct($list) {	
+	function __construct($list) {
 		for ($i=0; $i<count($list); $i++) {
-			$qFilename .= 'FileName=? OR ';
+			$this->qFilename .= 'SourcesKey=? OR ';
 		}
-		$qFilename = substr($qFilename,0,strlen($qFilename)-strlen(' OR '));
-		print_r($list);
-		$sourcesKey = Database::FetchAll("SELECT SourcesKey FROM Sources WHERE ".$qFilename,$list);
-		print_r($sourcesKey);
+		$this->qFilename = substr($this->qFilename,0,strlen($this->qFilename)-strlen(' OR '));
+		$this->list = $list;
 	}
 	
-	public function generate($random) {
-		if (count($this->names)) {
-			if (!$number || !is_numeric($number)) {
-				$number = 10;
-			}
-			
-			if ($number > count($this->names)) {
-				echo "Error: not enough names in the selected name list."; 
-				return;
-			}
-			
-			for ($i = 0; $i < $number; $i++) {
-				// ensure no duplicate entries
-				do {
-					$try = $this->names[rand(0, count($this->names) - 1)];
-				} while (count($this->chosen) != 0 && in_array($try, $this->chosen));
-				$this->chosen[] = $try;		
-			}
+	public function generate($number) {
+		$names = $this->getWords($number*5);
+		$j = 0;
+		for ($i = 0; $i < $number; $i++) {
+			// ensure no duplicate entries
+			do {
+				$try = $names[$j++]['Name'];
+				if ($j > count($names)) {
+					break;
+				}
+			} while (count($this->chosen) != 0 && in_array($try, $this->chosen));
+			$this->chosen[] = $try;		
 		}
+	}
+
+	private function getWords($number) {
+		return Database::FetchAll("SELECT Name FROM Names WHERE ".$this->qFilename." ORDER BY RAND() LIMIT ".$number, $this->list);
 	}
 	
 	private function returnSyllables($word) {
@@ -71,33 +65,36 @@ class NameList {
 	
 
 	public function generateRandom($number) {
-		if (count($this->names)) {
-			if (!$number || !is_numeric($number)) {
-				$number = 10;
+		$names = $this->getWords($number*10);
+		$k = 0;
+		for ($i = 0; $i < $number; $i++) {
+			$select = $names[$k++]['Name'];
+			$syllables = $this->returnSyllables($select);
+			$count = count($syllables);
+			$result = trim($syllables[0]);
+			for ($j = 1; $j < $count; $j++) {
+				do {
+					$select = $names[$k++]['Name'];
+					if ($k > count($names)) {
+						break;
+					}
+					$syllables = $this->returnSyllables($select);
+				} while (count($syllables) < $j);
+				$result .= trim($syllables[$j]);
 			}
-			
-			if ($number > count($this->names)) {
-				echo "Error: not enough names in the selected name list."; 
-				return;
-			}
-
-			for ($i = 0; $i < $number; $i++) {
-				$select = $this->names[rand(0, count($this->names) - 1)];
-				$syllables = $this->returnSyllables($select);
-				$count = count($syllables);
-				$result = trim($syllables[0]);
-				for ($j = 1; $j < $count; $j++) {
-					do {
-						$select = $this->names[rand(0, count($this->names) - 1)];
-						$syllables = $this->returnSyllables($select);
-					} while (count($syllables) < $j);
-					$result .= trim($syllables[$j]);
-				}
-				$this->chosen[] = $result;
-			}			
-		}
+			$this->chosen[] = $result;
+		}			
 	}
 }
+
+$number = $_GET['number'];
+if (!$number || !is_numeric($number)) {
+	$number = 10;
+}
+if ($number > 100) {
+	$number = 100;
+}
+
 
 if ($_GET['given']) {
 	$given = new NameList(explode(',', $_GET['given']));

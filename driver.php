@@ -14,7 +14,7 @@
 			$("." + type).each(function(index) {
 				if ($(this).css("background-color") == highlightColor) {
 					lists += $(this).attr("name") + ",";
-				}
+				}				
 			});
 			if (lists.length) {
 				lists = lists.substring(0, lists.length - 1);				
@@ -31,7 +31,7 @@
 			if (lists.length) {
 				lists = "given=" + lists;
 			}
-			var family = nameLists("familyName");			
+			var family = nameLists("familyName");
 			if (family) {
 				if (lists.length) {
 					lists = lists + "&";
@@ -77,7 +77,7 @@
 			$(".familyName").click(selectRow);
 			$(".givenName").css("cursor","pointer");
 			$(".familyName").css("cursor","pointer");
-
+			$(".default").css("background-color", highlightColor);
 			$("#t2col1").width($("#t1col1").width());			
 			$("#t2col2").width($("#t1col2").width());			
 			$("#t2col3").width($("#t1col3").width());						
@@ -112,7 +112,7 @@
 							echo 'default ';
 							$first = false;
 						}
-						echo 'givenName" name="'.$source['Filename'].'">
+						echo 'givenName" name="'.$source['SourcesKey'].'">
 							<td>'.$source['Title'].'</td>
 							<td>'.$source['Count'].'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
@@ -138,7 +138,7 @@
 							echo 'default ';
 							$first = false;
 						}
-						echo 'givenName" name="'.$source['Filename'].'">
+						echo 'familyName" name="'.$source['SourcesKey'].'">
 							<td>'.$source['Title'].'</td>
 							<td>'.$source['Count'].'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
