@@ -59,7 +59,7 @@
 		
 		function selectRow(e) {
 			if ($(this).css("background-color") == highlightColor) {
-				$(this).css("background-color", "white");
+				$(this).css("background-color", "");
 				$(this).find("td:first").html("");
 			} else {
 				$(this).css("background-color", highlightColor);
@@ -158,12 +158,12 @@
 			?>
 		</table>
 	</div>
-	<div>
+	<div id="names">
 		<h2>Names</h2>
 		<div id="results">Generating . . .</div>
 		<button id="generate">More</button>		
 	</div>
-	<div style="font-size:75%;position:fixed;bottom: 0;padding-top:10px;padding-bottom:10px;border-top:1px dashed black;font-style:italic">
+	<div id="footer">
 		<div>Website source code: <a href="https://github.com/davidfig/name-generator">https://github.com/davidfig/name-generator</a> (BSD License)</div>		
 	</div>
 </body>

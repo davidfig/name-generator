@@ -1,28 +1,48 @@
 body {
-	font-size: 125%; 
 	font-family: 'Raleway', sans-serif;
+	display: inline-block;
+	padding: 0px 20px 20px 20px;
+	text-align: center;
 }
 
 #settings {
-	float: right;
 	font-size: 75%;
+	float: right;
 	background: rgb(240,240,240);
-	padding: 10px 10px 10px 10px;
+	padding: 0px 10px 10px 10px;
+	border-radius: 15px;
+}
+
+#names {
+	font-size: 125%;
 }
 
 .sources {
 	text-align: center;
-	table-layout: fixed;
+	table-layout: fixed;	
 }
 
 #results {
-	margin-bottom: 20px;
+	margin-bottom: 20px;}
+
+#generate {
+	border-radius: 15px;
+}
+
+#footer {
+	clear: both;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size: 75%;
+	margin-top: 100px;
+	border-top:	1px dashed black;
+	font-style: italic
 }
 
 /* FROM http://proto.io/freebies/onoff/ */
 
 .onoffswitch {
-    position: relative; width: 90px;
+    position: relative; width: 90px; margin: 0 auto;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 
@@ -32,17 +52,17 @@ body {
 
 .onoffswitch-label {
     display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; 
+    border: 2px solid #999999; border-radius: 15px;
 }
 
 .onoffswitch-inner {
-    width: 200%; margin-left: -100%;
+    width: 200%; margin-left: -100%; 
     -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
     -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
 }
 
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    float: left; width: 50%; height: 30px; padding: 0; line-height: 30px; 
     font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
     -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
@@ -50,7 +70,7 @@ body {
 .onoffswitch-inner:before {
     content: "ON";
     padding-left: 10px;
-    background-color: #1B75BB; color: #FFFFFF;
+    background-color: rgb(200, 200, 200); color: #FFFFFF;
 }
 
 .onoffswitch-inner:after {
@@ -63,7 +83,7 @@ body {
 .onoffswitch-switch {
     width: 18px; margin: 6px;
     background: #FFFFFF;
-    border: 2px solid #999999; 
+    border: 2px solid #999999; border-radius: 15px;
     position: absolute; top: 0; bottom: 0; right: 56px;
     -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
     -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
