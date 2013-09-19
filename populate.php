@@ -5,15 +5,25 @@ namespace YYFNG;
 
 require "database.php";
 
-/* CHANGE FALSE TO TRUE FOR FIRST RUN TIME */
-if (false) {
-	$p = new Populate();
-	$p->createTables();
-	$p->injestSources();
-}
+$p = new Populate();
+$p->checkTables();
+$p->injestSources();
+echo '<br>Yopey Yopey\'s Fictional Name Generator is ready.';
 
 class Populate {
-	public function createTables() {
+	public function checkTables() {
+		echo "Checking if tables exist . . .";
+		try {
+			Database::Query("SELECT * FROM Sources");
+		}
+		catch (\PDOException $e) {
+			echo "NO<br>";	
+			return $this->createTables();
+		}
+		echo "YES<br>";
+	}
+	
+	public function cleanTables() {	
 		echo "Cleaning out old tables. . . <br>";
 		try {
 			Database::Query("DROP TABLE Sources");
@@ -24,7 +34,9 @@ class Populate {
 			Database::Query("DROP TABLE Names");
 		}
 		catch (\PDOException $e) {}
-		
+	}
+	
+	public function createTables() {
 		echo "Creating new tables . . .<br>";
 		Database::Query("
 			CREATE TABLE Sources (
@@ -62,11 +74,17 @@ class Populate {
 		}		
 		
 		foreach ($sources as $source) {
-			echo "Creating new source: ".$source["Filename"]."<br>";
-			Database::Query("INSERT INTO Sources (Filename,Title,`Count`,SourceName,SourceURL,Surname) VALUES (?,?,?,?,?,?)",
-				array($source["Filename"],$source["Title"],$source["Count"],$source["SourceName"],$source['SourceURL'],$source['IsSurname']));
-			$source["key"] = Database::LastInsertId();
-			$this->injestSource($source);
+			echo "Checking if ".$source["Filename"]." is already injested . . .";
+			$check = Database::FetchAll("SELECT * FROM Sources WHERE Filename=?", array($source["Filename"]));
+			echo count($check)?"YES<br>":"NO<br>";
+			
+			if (!count($check)) {
+				echo "Creating new source: ".$source["Filename"]."<br>";
+				Database::Query("INSERT INTO Sources (Filename,Title,`Count`,SourceName,SourceURL,Surname) VALUES (?,?,?,?,?,?)",
+					array($source["Filename"],$source["Title"],$source["Count"],$source["SourceName"],$source['SourceURL'],$source['IsSurname']));
+				$source["key"] = Database::LastInsertId();
+				$this->injestSource($source);
+			}
 		}
 	}
 	
@@ -75,6 +93,7 @@ class Populate {
 			switch ($source['Filename']) {
 				case "Old Testament (Hadley)": 
 				case "Elf - Lord of the Rings (Wikipedia)":
+				case "Dwarf (Bugmansbrewery)":
 					$this->loadLine($source["key"]); break;					
 				case "First Names (QuietAffiliate)":
 				case "Last Names (QuietAffiliate)":
