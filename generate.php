@@ -108,13 +108,15 @@ if ($_GET['family']) {
 
 if (count($given->chosen) || count($family->chosen)) {
 	for ($i=0; $i<$number; $i++) {
+		echo '<div class="result">';
 		if (count($given->chosen) && count($family->chosen)) {
-			echo $given->chosen[$i].' '.$family->chosen[$i].'<br>';
+			echo $given->chosen[$i].' '.$family->chosen[$i];
 		} else if (count($given->chosen)) {
-			echo $given->chosen[$i].'<br>';
+			echo $given->chosen[$i];
 		} else {
-			echo $family->chosen[$i].'<br>';
+			echo $family->chosen[$i];
 		}
+		echo '</div>';
 	}
 }
 
