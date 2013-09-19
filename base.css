@@ -10,6 +10,7 @@ body {
 
 .sources {
 	text-align: center;
+	table-layout: fixed;
 }
 
 #results {
