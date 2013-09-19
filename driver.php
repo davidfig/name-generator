@@ -60,13 +60,14 @@
 		function selectRow(e) {
 			if ($(this).css("background-color") == highlightColor) {
 				$(this).css("background-color", "white");
+				$(this).find("td:first").html("");
 			} else {
 				$(this).css("background-color", highlightColor);
-			}
-
+				$(this).find("td:first").html("X");
+			}			
 		}
 		
-		$(document).ready(function() {		
+		$(document).ready(function() {			
 			$(window).bind("keypress", function(e){
 				if (e.keyCode == 13) {
 					generateName();
@@ -80,11 +81,15 @@
 			$(".givenName").css("cursor","pointer");
 			$(".familyName").css("cursor","pointer");
 			$(".default").css("background-color", highlightColor);
-			$("#t2col1").width($("#t1col1").width());			
-			$("#t2col2").width($("#t1col2").width());			
-			$("#t2col3").width($("#t1col3").width());	
-
-			generateName();
+			
+			generateName();		
+		});
+		
+		$(window).load(function() {
+			$("#t2col0").width($("#t1col0").width());
+			$("#t2col1").width($("#t1col1").width());
+			$("#t2col2").width($("#t1col2").width());
+			$("#t2col3").width($("#t1col3").width());		
 		});
 	</script>
 </head>
@@ -92,7 +97,7 @@
 	<h1>Yopey Yopey's Fictional Name Generator</h1>
 	<div id="settings">
 		<h2>Settings</h2>
-		<h3>Randomize Sources</h3>
+		<h3>Randomize Syllables of Names</h3>
 		<!-- From: http://proto.io/freebies/onoff/ -->
 		<div class="onoffswitch">
 			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="randomize">
@@ -101,10 +106,11 @@
 				<div class="onoffswitch-switch"></div>
 			</label>
 		</div>
-		<h3>Given Name Sources</h3>
-		<table class="sources"">
+		<h3>First Name Sources</h3>
+		<table class="sources">
 			<tr>
-				<th id="t1col1"></th>
+				<th id="t1col0">Use</th>
+				<th id="t1col1">Name List</th>
 				<th id="t1col2">Name Count</th>
 				<th id="t1col3">Source</th>
 			</tr>
@@ -114,14 +120,11 @@
 				$first = true;
 				foreach ($sources as $source) {				
 					if (!$source['Surname']) {
-						echo '<tr class="';
-						if ($first) {
-							echo 'default ';
-							$first = false;
-						}
-						echo 'givenName" name="'.$source['SourcesKey'].'">
+						echo '<tr class="'.($first?'default':'').'
+							'givenName" name="'.$source['SourcesKey'].'">
+							<td>'..'</td>
 							<td>'.$source['Title'].'</td>
-							<td>'.$source['Count'].'</td>
+							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
 							</tr>';
 					}
@@ -129,10 +132,11 @@
 			
 			?>
 		</table>
-		<h3>Family Name Sources</h3>
+		<h3>Last Name Sources</h3>
 		<table class="sources">
 			<tr>
-				<th id="t2col1"></th>
+				<th id="t2col0">Use</th>		
+				<th id="t2col1">Name List</th>
 				<th id="t2col2">Name Count</th>
 				<th id="t2col3">Source</th>
 			</tr>
@@ -146,8 +150,9 @@
 							$first = false;
 						}
 						echo 'familyName" name="'.$source['SourcesKey'].'">
+							<td></td>
 							<td>'.$source['Title'].'</td>
-							<td>'.$source['Count'].'</td>
+							<td>'.number_format($source['Count']).'</td>
 							<td><a href="'.$source['SourceURL'].'">'.$source['SourceName'].'</a>
 							</tr>';
 					}
