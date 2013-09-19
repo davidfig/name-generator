@@ -6,6 +6,8 @@ body {
 #settings {
 	float: right;
 	font-size: 75%;
+	background: rgb(240,240,240);
+	padding: 10px 10px 10px 10px;
 }
 
 .sources {
